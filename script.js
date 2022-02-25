@@ -4,12 +4,18 @@ const GameBoard = (() => {
         return Table[x];
     }
     const setValue = (x,v) => {
-        Table[x] = v;
+        if(Table[x] == ''){
+            Table[x] = v; 
+            console.log(Table[x]);
+            return true;  
+        }
     }
     return { getValue,setValue };
 })();
 
 const squares = Array.from(document.querySelectorAll('.square'));
+const player_1 = document.querySelector('.player1');
+const player_2 = document.querySelector('.player2');
 const DisplayController = (() => {
     const render = () => {
         squares[0].innerText = GameBoard.getValue(0);
@@ -22,32 +28,43 @@ const DisplayController = (() => {
         squares[7].innerText = GameBoard.getValue(7);
         squares[8].innerText = GameBoard.getValue(8);
     }
-    return { render };
+    const marking = () => {
+        let i = 1;
+        squares.forEach((square) => {
+            square.addEventListener('click',(e) => {
+                if((i%9)%2 != 0){
+                    Player1.mark(square.id);
+                }
+                else{
+                    Player2.mark(square.id);
+                }
+                console.log(i);
+                i++;
+            });
+        });
+    }
+    return { render,marking };
 })();
 
 const Player1 = {
     name : "Player 1",
-    mark() {
-        squares.forEach((square) => {
-            square.addEventListener('click',(e) => {
-                GameBoard.setValue(square.id,'X');
-                DisplayController.render();
-            });
-        });
+    mark(id) {
+        if(GameBoard.setValue(id,'X') == true){
+            player_1.classList.add('vanish');
+            player_2.classList.remove('vanish');
+            DisplayController.render();
+        }
     },
 };
 const Player2 = {
     name : "Player 2",
-    mark() {
-        squares.forEach((square) => {
-            square.addEventListener('click',(e) => {
-                GameBoard.setValue(square.id,'O');
-                DisplayController.render();
-            });
-        });
+    mark(id) {
+        if(GameBoard.setValue(id,'O') == true){
+            player_2.classList.add('vanish');
+            player_1.classList.remove('vanish');
+            DisplayController.render();
+        }
     },
 };
 
-
-Player1.mark();
-Player2.mark();
+DisplayController.marking();

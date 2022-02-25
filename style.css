@@ -4,15 +4,49 @@ body{
 }
 .container{
     display: grid;
-    grid-template-rows: repeat(1,1fr) repeat(1,auto );
+    grid-template: repeat(1,1fr) repeat(1,auto) / repeat(1,1fr) repeat(3,1fr) repeat(1,1fr);
+    grid-template-areas: 
+    "header header header header header"
+    "player1 content content content player2";
+}
+.header{
+    color: white;
+}
+#header{
+    grid-area: header;
 }
 .content{
     display: grid;
     grid-template: repeat(3,1fr) / repeat(3,1fr);
-    gap: 10px;
-    padding: 20px 300px;
+    gap: 20px;
+    padding: 20px 20px;
+}
+#content{
+    grid-area: content;
 }
 .square{
     background-color: white;
     height: 150px;
-}       
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+    border-radius: 10px;
+}
+.player1, .player2{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 2s;
+}
+#player1{
+    grid-area: player1;
+}
+#player2{
+    grid-area: player2;
+}
+.vanish{
+    opacity: 0;
+}
