@@ -1,26 +1,26 @@
 const GameBoard = (() => {
-    let Table = [['O','O','X'],['O','O','O'],['O','O','O']];
-    const getValue = (x,y) => {
-        return Table[x][y];
+    let Table = ['','','','','','','','',''];
+    const getValue = (x) => {
+        return Table[x];
     }
-    return { getValue };
+    const setValue = (x,v) => {
+        Table[x] = v;
+    }
+    return { getValue,setValue };
 })();
 
-const squares = [];
-squares.push(Array.from(document.querySelectorAll('.sq0')));
-squares.push(Array.from(document.querySelectorAll('.sq1')));
-squares.push(Array.from(document.querySelectorAll('.sq2')));
+const squares = Array.from(document.querySelectorAll('.square'));
 const DisplayController = (() => {
     const render = () => {
-        squares[0][0].innerText = GameBoard.getValue(0,0);
-        squares[0][1].innerText = GameBoard.getValue(0,1);
-        squares[0][2].innerText = GameBoard.getValue(0,2);
-        squares[1][0].innerText = GameBoard.getValue(1,0);
-        squares[1][1].innerText = GameBoard.getValue(1,1);
-        squares[1][2].innerText = GameBoard.getValue(1,2);
-        squares[2][0].innerText = GameBoard.getValue(2,0);
-        squares[2][1].innerText = GameBoard.getValue(2,1);
-        squares[2][2].innerText = GameBoard.getValue(2,2);
+        squares[0].innerText = GameBoard.getValue(0);
+        squares[1].innerText = GameBoard.getValue(1);
+        squares[2].innerText = GameBoard.getValue(2);
+        squares[3].innerText = GameBoard.getValue(3);
+        squares[4].innerText = GameBoard.getValue(4);
+        squares[5].innerText = GameBoard.getValue(5);
+        squares[6].innerText = GameBoard.getValue(6);
+        squares[7].innerText = GameBoard.getValue(7);
+        squares[8].innerText = GameBoard.getValue(8);
     }
     return { render };
 })();
@@ -28,6 +28,26 @@ const DisplayController = (() => {
 const Player1 = {
     name : "Player 1",
     mark() {
-        DisplayController.render();
+        squares.forEach((square) => {
+            square.addEventListener('click',(e) => {
+                GameBoard.setValue(square.id,'X');
+                DisplayController.render();
+            });
+        });
     },
 };
+const Player2 = {
+    name : "Player 2",
+    mark() {
+        squares.forEach((square) => {
+            square.addEventListener('click',(e) => {
+                GameBoard.setValue(square.id,'O');
+                DisplayController.render();
+            });
+        });
+    },
+};
+
+
+Player1.mark();
+Player2.mark();
