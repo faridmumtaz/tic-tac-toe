@@ -11,6 +11,8 @@ body{
 }
 .header{
     color: white;
+    display: flex;
+    justify-content: space-around;
 }
 #header{
     grid-area: header;
@@ -49,4 +51,7 @@ body{
 }
 .vanish{
     opacity: 0;
+}
+.unclickable{
+    pointer-events: none;
 }
